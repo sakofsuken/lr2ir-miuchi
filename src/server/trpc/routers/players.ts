@@ -1,4 +1,4 @@
-import { count, desc, eq, like } from 'drizzle-orm';
+import { type SQL, and, count, desc, eq, like } from 'drizzle-orm';
 import { z } from 'zod/v4';
 
 import { charts, players, scores } from '@/db/schema';
@@ -43,12 +43,17 @@ export const playersRouter = createRouter({
     .input(
       z.object({
         playerId: z.number().int(),
+        clear: z.number().int().min(0).max(5).optional(),
         page: z.number().int().positive().default(1),
         limit: z.number().int().positive().max(100).default(50),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const where = eq(scores.playerId, input.playerId);
+      const conditions: SQL[] = [eq(scores.playerId, input.playerId)];
+      if (input.clear !== undefined) {
+        conditions.push(eq(scores.clear, input.clear));
+      }
+      const where = and(...conditions);
 
       const [totalRows, rows] = await Promise.all([
         ctx.db.select({ count: count() }).from(scores).where(where),
