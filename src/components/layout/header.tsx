@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Nav } from './nav';
+import { UserMenu } from './user-menu';
 
 export function Header() {
   return (
@@ -11,14 +12,7 @@ export function Header() {
             LR2IR
           </Link>
         </div>
-        <div className="flex items-center gap-2">
-          <Link
-            href="/login"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            ログイン
-          </Link>
-        </div>
+        <UserMenu />
       </div>
     </header>
   );

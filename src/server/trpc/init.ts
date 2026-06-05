@@ -2,15 +2,17 @@ import { initTRPC } from '@trpc/server';
 import superjson from 'superjson';
 
 import { db } from '@/db';
+import { getSession } from '@/server/auth/session';
 
-export function createContext() {
+export async function createContext() {
+  const session = await getSession();
   return {
     db,
-    session: null as { playerId: number } | null,
+    session,
   };
 }
 
-export type Context = ReturnType<typeof createContext>;
+export type Context = Awaited<ReturnType<typeof createContext>>;
 
 const t = initTRPC.context<Context>().create({
   transformer: superjson,
