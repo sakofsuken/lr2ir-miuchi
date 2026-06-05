@@ -6,6 +6,23 @@ import { createRouter } from '../init';
 import { publicProcedure } from '../procedures';
 
 export const chartsRouter = createRouter({
+  getPopular: publicProcedure
+    .input(z.object({ limit: z.number().int().positive().max(50).default(10) }))
+    .query(async ({ ctx, input }) => {
+      const rows = await ctx.db
+        .select({
+          md5: charts.md5,
+          title: charts.title,
+          artist: charts.artist,
+          playPeople: charts.playPeople,
+        })
+        .from(charts)
+        .orderBy(desc(charts.playPeople))
+        .limit(input.limit);
+
+      return rows;
+    }),
+
   getByMd5: publicProcedure.input(z.object({ md5: z.string() })).query(async ({ ctx, input }) => {
     const rows = await ctx.db.select().from(charts).where(eq(charts.md5, input.md5)).limit(1);
 

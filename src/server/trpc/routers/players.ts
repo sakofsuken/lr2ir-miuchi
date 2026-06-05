@@ -6,6 +6,20 @@ import { createRouter } from '../init';
 import { publicProcedure } from '../procedures';
 
 export const playersRouter = createRouter({
+  getStats: publicProcedure.query(async ({ ctx }) => {
+    const [playerRows, chartRows, scoreRows] = await Promise.all([
+      ctx.db.select({ count: count() }).from(players),
+      ctx.db.select({ count: count() }).from(charts),
+      ctx.db.select({ count: count() }).from(scores),
+    ]);
+
+    return {
+      playerCount: playerRows[0]?.count ?? 0,
+      chartCount: chartRows[0]?.count ?? 0,
+      scoreCount: scoreRows[0]?.count ?? 0,
+    };
+  }),
+
   getById: publicProcedure
     .input(z.object({ id: z.number().int() }))
     .query(async ({ ctx, input }) => {
