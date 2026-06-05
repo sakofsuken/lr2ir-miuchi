@@ -9,10 +9,7 @@ export function RivalButton({ playerId }: { playerId: number }) {
   const { data: me } = trpc.auth.me.useQuery(undefined, {
     retry: false,
   });
-  const { data: rivals } = trpc.rivals.list.useQuery(
-    { playerId: me?.id ?? 0 },
-    { enabled: !!me },
-  );
+  const { data: rivals } = trpc.rivals.list.useQuery({ playerId: me?.id ?? 0 }, { enabled: !!me });
 
   const utils = trpc.useUtils();
   const addRival = trpc.rivals.add.useMutation({
