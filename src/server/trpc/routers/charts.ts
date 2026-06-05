@@ -1,4 +1,4 @@
-import { type SQL, and, asc, count, desc, eq, gte, like, lte, or, sql } from 'drizzle-orm';
+import { type SQL, and, asc, count, desc, eq, like, or, sql } from 'drizzle-orm';
 import { z } from 'zod/v4';
 
 import { charts, players, scores } from '@/db/schema';

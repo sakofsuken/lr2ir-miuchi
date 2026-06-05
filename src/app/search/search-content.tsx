@@ -23,6 +23,19 @@ const KEY_MODES = ['', '5KEYS', '7KEYS', '10KEYS', '14KEYS', '9KEYS'] as const;
 
 type SortField = 'title' | 'artist' | 'level' | 'playPeople' | 'clearRate';
 
+function SortIcon({
+  field,
+  activeSort,
+  activeOrder,
+}: {
+  field: string;
+  activeSort: string;
+  activeOrder: string;
+}) {
+  if (activeSort !== field) return <ArrowUpDown className="size-3" />;
+  return activeOrder === 'asc' ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />;
+}
+
 export function SearchContent() {
   const [q, setQ] = useQueryState('q', parseAsString.withDefault(''));
   const [keys, setKeys] = useQueryState('keys', parseAsString.withDefault(''));
@@ -60,11 +73,6 @@ export function SearchContent() {
     if (p > 1) params.set('page', String(p));
     const qs = params.toString();
     return qs ? `/search?${qs}` : '/search';
-  }
-
-  function SortIcon({ field }: { field: string }) {
-    if (sort !== field) return <ArrowUpDown className="size-3" />;
-    return order === 'asc' ? <ArrowUp className="size-3" /> : <ArrowDown className="size-3" />;
   }
 
   return (
@@ -127,7 +135,7 @@ export function SearchContent() {
                       className="inline-flex items-center gap-1"
                       onClick={() => handleSort('title')}
                     >
-                      タイトル <SortIcon field="title" />
+                      タイトル <SortIcon field="title" activeSort={sort} activeOrder={order} />
                     </button>
                   </TableHead>
                   <TableHead>
@@ -136,7 +144,7 @@ export function SearchContent() {
                       className="inline-flex items-center gap-1"
                       onClick={() => handleSort('artist')}
                     >
-                      アーティスト <SortIcon field="artist" />
+                      アーティスト <SortIcon field="artist" activeSort={sort} activeOrder={order} />
                     </button>
                   </TableHead>
                   <TableHead className="text-right">
@@ -145,7 +153,7 @@ export function SearchContent() {
                       className="inline-flex items-center gap-1"
                       onClick={() => handleSort('level')}
                     >
-                      レベル <SortIcon field="level" />
+                      レベル <SortIcon field="level" activeSort={sort} activeOrder={order} />
                     </button>
                   </TableHead>
                   <TableHead>キーモード</TableHead>
@@ -155,7 +163,8 @@ export function SearchContent() {
                       className="inline-flex items-center gap-1"
                       onClick={() => handleSort('playPeople')}
                     >
-                      プレイ人数 <SortIcon field="playPeople" />
+                      プレイ人数{' '}
+                      <SortIcon field="playPeople" activeSort={sort} activeOrder={order} />
                     </button>
                   </TableHead>
                   <TableHead className="text-right">
@@ -164,7 +173,8 @@ export function SearchContent() {
                       className="inline-flex items-center gap-1"
                       onClick={() => handleSort('clearRate')}
                     >
-                      クリアレート <SortIcon field="clearRate" />
+                      クリアレート{' '}
+                      <SortIcon field="clearRate" activeSort={sort} activeOrder={order} />
                     </button>
                   </TableHead>
                 </TableRow>
