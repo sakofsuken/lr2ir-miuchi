@@ -6,6 +6,14 @@ import { createRouter } from '../init';
 import { publicProcedure } from '../procedures';
 
 export const coursesRouter = createRouter({
+  getCategories: publicProcedure.query(async ({ ctx }) => {
+    const rows = await ctx.db
+      .selectDistinct({ category: courses.category })
+      .from(courses)
+      .orderBy(courses.category);
+    return rows.map((r) => r.category).filter((c): c is string => c !== null);
+  }),
+
   list: publicProcedure
     .input(
       z.object({
