@@ -8,6 +8,7 @@ export const players = sqliteTable('players', {
   playCount: integer('play_count').notNull().default(0),
   fcCount: integer('fc_count').notNull().default(0),
   passwordHash: text('password_hash'),
+  passMd5: text('pass_md5'),
 });
 
 export const sessions = sqliteTable('sessions', {
