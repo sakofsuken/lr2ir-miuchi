@@ -28,6 +28,15 @@
     "enabled": false
   },
   "files": {
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", "**/*.json", "**/*.css"]
+    "includes": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.mjs",
+      "**/*.json",
+      "**/*.css",
+      "!.next/**",
+      "!next-env.d.ts"
+    ]
   }
 }

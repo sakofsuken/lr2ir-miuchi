@@ -170,3 +170,10 @@ export const bbs = sqliteTable('bbs', {
   message: text().notNull(),
   postedAt: text('posted_at').notNull(),
 });
+
+export const scrapeProgress = sqliteTable('scrape_progress', {
+  task: text().primaryKey(),
+  lastPage: integer('last_page').notNull().default(0),
+  status: text().notNull().default('in_progress'),
+  updatedAt: text('updated_at').notNull(),
+});
