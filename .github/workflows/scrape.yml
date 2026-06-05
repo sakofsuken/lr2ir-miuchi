@@ -1,0 +1,46 @@
+name: Scrape lr2ir.com
+
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: '実行するタスク'
+        required: true
+        type: choice
+        options:
+          - players
+          - tables
+          - charts
+          - ghosts
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+
+    env:
+      TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
+      TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Run scraper (${{ inputs.task }})
+        run: pnpm scrape ${{ inputs.task }}
+
+      - name: Upload error logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scrape-error-${{ inputs.task }}-${{ github.run_id }}
+          path: '*.log'
+          retention-days: 7
