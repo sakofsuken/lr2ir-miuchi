@@ -7,6 +7,16 @@ export const players = sqliteTable('players', {
   danDp: text('dan_dp'),
   playCount: integer('play_count').notNull().default(0),
   fcCount: integer('fc_count').notNull().default(0),
+  passwordHash: text('password_hash'),
+});
+
+export const sessions = sqliteTable('sessions', {
+  id: text().primaryKey(),
+  playerId: integer('player_id')
+    .notNull()
+    .references(() => players.id),
+  expiresAt: text('expires_at').notNull(),
+  createdAt: text('created_at').notNull(),
 });
 
 export const charts = sqliteTable('charts', {
