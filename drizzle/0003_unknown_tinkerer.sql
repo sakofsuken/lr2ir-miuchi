@@ -1,0 +1,1 @@
+ALTER TABLE `players` ADD `pass_md5` text;
