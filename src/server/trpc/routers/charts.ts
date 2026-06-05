@@ -1,4 +1,4 @@
-import { and, count, desc, eq, like, or } from 'drizzle-orm';
+import { type SQL, and, asc, count, desc, eq, gte, like, lte, or, sql } from 'drizzle-orm';
 import { z } from 'zod/v4';
 
 import { charts, players, scores } from '@/db/schema';
@@ -90,22 +90,26 @@ export const chartsRouter = createRouter({
       z.object({
         query: z.string().optional(),
         keys: z.string().optional(),
+        sort: z
+          .enum(['title', 'artist', 'level', 'playPeople', 'clearRate'])
+          .optional()
+          .default('playPeople'),
+        order: z.enum(['asc', 'desc']).optional().default('desc'),
         page: z.number().int().positive().default(1),
-        limit: z.number().int().positive().max(100).default(50),
+        limit: z.number().int().positive().max(100).default(100),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const conditions = [];
+      const conditions: SQL[] = [];
 
       if (input.query) {
         const pattern = `%${input.query}%`;
-        conditions.push(
-          or(
-            like(charts.title, pattern),
-            like(charts.artist, pattern),
-            like(charts.genre, pattern),
-          ),
+        const textMatch = or(
+          like(charts.title, pattern),
+          like(charts.artist, pattern),
+          like(charts.genre, pattern),
         );
+        if (textMatch) conditions.push(textMatch);
       }
 
       if (input.keys) {
@@ -114,12 +118,24 @@ export const chartsRouter = createRouter({
 
       const where = conditions.length > 0 ? and(...conditions) : undefined;
 
+      const sortColumnMap = {
+        title: charts.title,
+        artist: charts.artist,
+        level: sql`CAST(${charts.level} AS INTEGER)`,
+        playPeople: charts.playPeople,
+        clearRate: sql`CASE WHEN ${charts.playPeople} > 0 THEN CAST(${charts.clearPeople} AS REAL) / ${charts.playPeople} ELSE 0 END`,
+      };
+
+      const sortCol = sortColumnMap[input.sort];
+      const orderBy = input.order === 'asc' ? asc(sortCol) : desc(sortCol);
+
       const [totalRows, rows] = await Promise.all([
         ctx.db.select({ count: count() }).from(charts).where(where),
         ctx.db
           .select()
           .from(charts)
           .where(where)
+          .orderBy(orderBy)
           .offset((input.page - 1) * input.limit)
           .limit(input.limit),
       ]);
