@@ -49,7 +49,9 @@ export const tablesRouter = createRouter({
             genre: charts.genre,
             keys: charts.keys,
             playCount: charts.playCount,
+            playPeople: charts.playPeople,
             clearCount: charts.clearCount,
+            clearPeople: charts.clearPeople,
           })
           .from(tableCharts)
           .innerJoin(charts, eq(tableCharts.chartMd5, charts.md5))
