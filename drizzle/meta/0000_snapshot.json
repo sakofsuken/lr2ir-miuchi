@@ -49,12 +49,8 @@
           "name": "bbs_player_id_players_id_fk",
           "tableFrom": "bbs",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -407,10 +403,7 @@
       "indexes": {
         "course_scores_ranking_idx": {
           "name": "course_scores_ranking_idx",
-          "columns": [
-            "course_id",
-            "exscore"
-          ],
+          "columns": ["course_id", "exscore"],
           "isUnique": false
         }
       },
@@ -419,12 +412,8 @@
           "name": "course_scores_course_id_courses_id_fk",
           "tableFrom": "course_scores",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -432,22 +421,15 @@
           "name": "course_scores_player_id_players_id_fk",
           "tableFrom": "course_scores",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "course_scores_course_id_player_id_pk": {
-          "columns": [
-            "course_id",
-            "player_id"
-          ],
+          "columns": ["course_id", "player_id"],
           "name": "course_scores_course_id_player_id_pk"
         }
       },
@@ -538,12 +520,8 @@
           "name": "courses_creator_id_players_id_fk",
           "tableFrom": "courses",
           "tableTo": "players",
-          "columnsFrom": [
-            "creator_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["creator_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -581,10 +559,7 @@
       "foreignKeys": {},
       "compositePrimaryKeys": {
         "ghosts_song_md5_player_id_pk": {
-          "columns": [
-            "song_md5",
-            "player_id"
-          ],
+          "columns": ["song_md5", "player_id"],
           "name": "ghosts_song_md5_player_id_pk"
         }
       },
@@ -666,9 +641,7 @@
       "indexes": {
         "rivals_reverse_idx": {
           "name": "rivals_reverse_idx",
-          "columns": [
-            "rival_id"
-          ],
+          "columns": ["rival_id"],
           "isUnique": false
         }
       },
@@ -677,12 +650,8 @@
           "name": "rivals_player_id_players_id_fk",
           "tableFrom": "rivals",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -690,22 +659,15 @@
           "name": "rivals_rival_id_players_id_fk",
           "tableFrom": "rivals",
           "tableTo": "players",
-          "columnsFrom": [
-            "rival_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["rival_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "rivals_player_id_rival_id_pk": {
-          "columns": [
-            "player_id",
-            "rival_id"
-          ],
+          "columns": ["player_id", "rival_id"],
           "name": "rivals_player_id_rival_id_pk"
         }
       },
@@ -868,10 +830,7 @@
       "indexes": {
         "scores_ranking_idx": {
           "name": "scores_ranking_idx",
-          "columns": [
-            "song_md5",
-            "exscore"
-          ],
+          "columns": ["song_md5", "exscore"],
           "isUnique": false
         }
       },
@@ -880,12 +839,8 @@
           "name": "scores_song_md5_charts_md5_fk",
           "tableFrom": "scores",
           "tableTo": "charts",
-          "columnsFrom": [
-            "song_md5"
-          ],
-          "columnsTo": [
-            "md5"
-          ],
+          "columnsFrom": ["song_md5"],
+          "columnsTo": ["md5"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -893,22 +848,15 @@
           "name": "scores_player_id_players_id_fk",
           "tableFrom": "scores",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "scores_song_md5_player_id_pk": {
-          "columns": [
-            "song_md5",
-            "player_id"
-          ],
+          "columns": ["song_md5", "player_id"],
           "name": "scores_song_md5_player_id_pk"
         }
       },
@@ -946,12 +894,8 @@
           "name": "table_charts_table_id_tables_id_fk",
           "tableFrom": "table_charts",
           "tableTo": "tables",
-          "columnsFrom": [
-            "table_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["table_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -959,22 +903,15 @@
           "name": "table_charts_chart_md5_charts_md5_fk",
           "tableFrom": "table_charts",
           "tableTo": "charts",
-          "columnsFrom": [
-            "chart_md5"
-          ],
-          "columnsTo": [
-            "md5"
-          ],
+          "columnsFrom": ["chart_md5"],
+          "columnsTo": ["md5"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "table_charts_table_id_chart_md5_pk": {
-          "columns": [
-            "table_id",
-            "chart_md5"
-          ],
+          "columns": ["table_id", "chart_md5"],
           "name": "table_charts_table_id_chart_md5_pk"
         }
       },
